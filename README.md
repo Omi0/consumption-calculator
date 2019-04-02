@@ -35,7 +35,7 @@ Existing Tariffs:
 
 ```
 {
-    name: Packaged tariff,
+    name: "Packaged tariff",
     configs:[{
         daily_charge: 2.19178082192, 
         daily_rate: 0, 
@@ -51,7 +51,7 @@ Existing Tariffs:
 
 ```
 {
-    name:Packaged tariff,
+    name: "Packaged tariff",
     configs:[{
         daily_charge:0.16438356164, 
         daily_rate: 0.22, 
