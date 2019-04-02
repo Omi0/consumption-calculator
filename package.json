@@ -1,13 +1,17 @@
 {
   "name": "consumption-calculator",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "scripts": {
-    "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "test": "ng test",
+    "test-headless": "ng test --watch=false --progress=false --browsers=ChromeHeadless",
+    "deploy": "npm run lint && npm run test-headless && ng build --prod && firebase deploy"
+  },
+  "author": {
+    "name": "Timothy Sergeev",
+    "email": "timofeybm@gmail.com"
   },
   "private": true,
   "dependencies": {

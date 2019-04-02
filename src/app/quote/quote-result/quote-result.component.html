@@ -1,0 +1,24 @@
+<ng-container *ngIf="quotes$ && consumption">
+  <div class="wrapper">
+    <h1>Annual cost for {{ consumption | number: 0 }} kWh/year</h1>
+    <ng-container *ngIf="(quotes$ | async) as quotes; else loading">
+      <div *ngIf="quotes.length; else noResults">
+        <div class="quote" *ngFor="let quote of quotes">
+          <div class="tariff-name" *ngIf="quote.tariff_name">
+            {{ quote.tariff_name }}
+          </div>
+          <div class="tariff-cost" *ngIf="quote.tariff_cost">
+            <strong>{{
+              quote.tariff_cost | currency: "EUR":"symbol":"1.0-2"
+            }}</strong>
+          </div>
+        </div>
+      </div>
+      <ng-template #noResults>No Results</ng-template>
+      <div class="quote-again">
+        <button [routerLink]="['/quote']">Quote Again</button>
+      </div>
+    </ng-container>
+    <ng-template #loading><div class="loader"></div></ng-template>
+  </div>
+</ng-container>

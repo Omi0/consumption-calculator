@@ -1,0 +1,12 @@
+<div class="wrapper">
+  <h1>Tariff Comparison</h1>
+  <input
+    #input
+    type="number"
+    pattern="d*"
+    placeholder="Yearly consumption, kWh"
+    (keydown.enter)="getQuotes(input)"
+  />
+  <button (click)="getQuotes(input)">Get Quotes</button>
+  <p *ngIf="errorMessage">{{ errorMessage }}</p>
+</div>
