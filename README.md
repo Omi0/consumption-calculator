@@ -1,27 +1,91 @@
 # ConsumptionCalculator
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.6.
+This [calculator](https://consumption-calculator-cc81b.firebaseapp.com) is used to estimate annual energy costs based on annual consumption value. Front-end is written on Angular 7. RestAPI is written on Node.JS Express and hosted on Google Cloud Functions. Utilizes Firebase hosting.
 
-## Development server
+![widget preview](https://raw.githubusercontent.com/Omi0/consumption-calculator/master/preview.png)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Requirements
 
-## Code scaffolding
+[Angular 7](https://angular.io/)
+[Firebase](https://firebase.google.com/)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## UI Details
+1. UI has 2 different routes: one for input and another for results. Parameters are passed to url via encoded Base64 string. This allows customers to share the result page.
+2. There are 2 key listeres: enter on input to get results and esc on result page to get back
+3. Basic Routes animation to smooth out transitions
 
-## Build
+## Calculation Model
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Calculation configs inherits following model. This model allows you to add many different customizable tariffs:
 
-## Running unit tests
+```
+{
+    name: string;
+    configs:[
+        {
+        daily_charge: number;
+        daily_rate: number;
+        threshold: number;
+        },
+        ...
+    ]
+}
+```
+Existing Tariffs: 
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```
+{
+    name: Packaged tariff,
+    configs:[{
+        daily_charge: 2.19178082192, 
+        daily_rate: 0, 
+        threshold: 4000
+    },
+    {
+        daily_charge: 0, 
+        daily_rate: 0.30, 
+        threshold: 999999999
+    }]
+}
+```
 
-## Running end-to-end tests
+```
+{
+    name:Packaged tariff,
+    configs:[{
+        daily_charge:0.16438356164, 
+        daily_rate: 0.22, 
+        threshold: 999999999
+    }]
+}
+```
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
-## Further help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+### Adding new tariff
+
+To add new tariff you need to send POST request to following endpoint specified tariff model via params. 
+Param validation is taking place. 
+```
+https://us-central1-consumption-calculator-cc81b.cloudfunctions.net/tariffsAdd
+```
+
+## RestAPI
+
+RestAPI endpoints is located under `functions/src` directory. Info:
+1. index.ts autoloads automatically functions with `.export.js` suffix
+2. Basic query and params validations is processed by `joi`
+3. Cost calculation logic is under `tariff.function.ts` file
+
+
+## Unit tests
+
+Unin tests are written and can be run via `ng test`
+
+## Deployments
+
+Prior deployments app must pass `lint` and `karma` tests. To deploy to Firebase run following commands:
+
+1. Install Firebase CLI / firebase-tools: `npm install -g firebase-tools`
+2. Login into Firebase account: `firebase login`
+3. Deploy environment: `npm run deploy`
