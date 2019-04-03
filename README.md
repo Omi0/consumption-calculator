@@ -90,3 +90,8 @@ Prior deployments app must pass `lint` and `karma` tests. To deploy to Firebase 
 2. Login into Firebase account: `firebase login`
 3. Init firebase and create new project (pickup Hosting, Functions, DB): `firebase init`
 4. Deploy environment: `npm run deploy`
+
+## Known security flaws
+
+1. CORS requests
+2. Absence of request limiter
