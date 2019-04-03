@@ -88,4 +88,5 @@ Prior deployments app must pass `lint` and `karma` tests. To deploy to Firebase 
 
 1. Install Firebase CLI / firebase-tools: `npm install -g firebase-tools`
 2. Login into Firebase account: `firebase login`
-3. Deploy environment: `npm run deploy`
+3. Init firebase and create new project (pickup Hosting, Functions, DB): `firebase init`
+4. Deploy environment: `npm run deploy`
